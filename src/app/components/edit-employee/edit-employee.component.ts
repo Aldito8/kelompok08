@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Employee } from 'src/app/employee';
+import { Employee } from '../../employee';
 import Swal from 'sweetalert2';
 
 @Component({
