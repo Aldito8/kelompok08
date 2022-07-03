@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
   employees: Employee[] = [];
@@ -19,14 +19,12 @@ export class DashboardComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     private modalService: NgbModal
-  ) {
-    
-  }
+  ) {}
 
   ngOnInit(): void {
     this.employeeService.getAll().subscribe((employees: Employee[]) => {
       this.employees = employees;
-    }) 
+    });
   }
 
   hapus(id: string) {
@@ -34,7 +32,7 @@ export class DashboardComponent implements OnInit {
       title: 'Are you sure want to delete?',
       showCloseButton: true,
       showDenyButton: true,
-      
+
       confirmButtonText: 'OK',
       denyButtonText: 'Cancel',
     }).then((result) => {
@@ -44,37 +42,44 @@ export class DashboardComponent implements OnInit {
             text: 'data deleted successfully',
             target: '#custom-target',
             customClass: {
-              container: 'position-absolute'
+              container: 'position-absolute',
             },
             toast: true,
-            position: 'top-right'
-          }
-          )
-          const idx = this.employees.findIndex(q => q._id === id);
+            position: 'top-right',
+          });
+          const idx = this.employees.findIndex((q) => q._id === id);
           this.employees.splice(idx, 1);
         });
       }
-    })
+    });
   }
 
   editModal(emplooye: Employee, id: string) {
-    const modal = this.modalService.open(EditEmployeeComponent, {centered: true, ariaLabelledBy: 'modal-basic-title'});
+    const modal = this.modalService.open(EditEmployeeComponent, {
+      centered: true,
+      ariaLabelledBy: 'modal-basic-title',
+    });
     modal.componentInstance.emplooye = emplooye;
-    modal.result.then(emplooye => {
-      this.employeeService.update(id, emplooye)
-      .subscribe(emplooye => {
-        const idx = this.employees.findIndex(q => q._id === id);
-        this.employees[idx] = {...this.employees[idx], ...emplooye};
-      });
-    }).catch(e => console.log(e));
+    modal.result
+      .then((emplooye) => {
+        this.employeeService.update(id, emplooye).subscribe((emplooye) => {
+          const idx = this.employees.findIndex((q) => q._id === id);
+          this.employees[idx] = { ...this.employees[idx], ...emplooye };
+        });
+      })
+      .catch((e) => console.log(e));
   }
 
   addModal() {
-    const modal = this.modalService.open(AddEmployeeComponent, {centered: true});
-    modal.result.then(employee => {
-      this.employeeService.create(employee)
-      .subscribe(employee => this.employees.push(employee));
-    }).catch(e => console.log(e));
+    const modal = this.modalService.open(AddEmployeeComponent, {
+      centered: true,
+    });
+    modal.result
+      .then((employee) => {
+        this.employeeService
+          .create(employee)
+          .subscribe((employee) => this.employees.push(employee));
+      })
+      .catch((e) => console.log(e));
   }
-
 }
