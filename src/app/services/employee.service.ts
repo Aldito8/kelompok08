@@ -20,33 +20,33 @@ export class EmployeeService {
   constructor(private httpClient: HttpClient) { }
 
   getAll(): Observable<Employee[]> {
-    return this.httpClient.get<Employee[]>(this.apiURL + '/employees/')
+    return this.httpClient.get<Employee[]>(this.apiURL + 'api/employees/')
     .pipe(
       catchError(this.errorHandler)
     )
   }
      
   create(post: Employee): Observable<Employee> {
-    return this.httpClient.post<Employee>(this.apiURL + '/employees/add', JSON.stringify(post), this.httpOptions)
+    return this.httpClient.post<Employee>(this.apiURL + 'api/employees/add', JSON.stringify(post), this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
   }  
      
   find(id: string): Observable<any> {
-    return this.httpClient.get(this.apiURL + '/employees/' + id)
+    return this.httpClient.get(this.apiURL + 'api/employees/' + id)
     .pipe(catchError(this.errorHandler))
   }
      
   update(id: string, post: Employee): Observable<any> {
-    return this.httpClient.patch(this.apiURL + '/employees/' + id, JSON.stringify(post), this.httpOptions)
+    return this.httpClient.patch(this.apiURL + 'api/employees/' + id, JSON.stringify(post), this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
   }
      
   delete(id: string): Observable<any> {
-    return this.httpClient.delete(this.apiURL + '/employees/' + id, this.httpOptions)
+    return this.httpClient.delete(this.apiURL + 'api/employees/' + id, this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
